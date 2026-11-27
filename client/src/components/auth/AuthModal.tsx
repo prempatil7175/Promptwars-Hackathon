@@ -4,35 +4,11 @@ import { ArrowRight, KeyRound, Lock, ShieldCheck, UserCheck } from 'lucide-react
 import { useAuth } from '../../context/AuthContext';
 import { ThemeToggle } from '../ui/ThemeToggle';
 
-const NAV_PREVIEW_ITEMS: { label: string; hint: string }[] = [
-  {
-    label: 'Dashboard',
-    hint: 'Session sanitization telemetry, category visibility, and local privacy boundary.',
-  },
-  {
-    label: 'Sanitization Workspace',
-    hint: 'Paste text or upload .txt / .csv files up to 10 MB for 100% browser-side redaction.',
-  },
-  {
-    label: 'Detection Analytics',
-    hint: 'Inspect validated PII counts, rejected false positives, and engine timing.',
-  },
-  {
-    label: 'Verification Suite',
-    hint: 'Run live Verhoeff, Luhn, IPv6, CSV, and privacy-boundary test vectors.',
-  },
-  {
-    label: 'Settings',
-    hint: 'Manage Demo Mode (Ctrl+Shift+D), optional Gemini readiness, and threat model.',
-  },
-];
-
 export function AuthModal() {
   const { loginAsDemoUser, signInWithEmail, supabaseReady } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [submitting, setSubmitting] = useState(false);
-  const [activeNavHint, setActiveNavHint] = useState<string | null>(null);
   const emailInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,8 +19,7 @@ export function AuthModal() {
     setSubmitting(false);
   };
 
-  const focusLoginForm = (hint?: string) => {
-    if (hint) setActiveNavHint(hint);
+  const focusLoginForm = () => {
     emailInputRef.current?.focus();
     emailInputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
@@ -85,22 +60,6 @@ export function AuthModal() {
             PII GUARD
           </span>
         </div>
-
-        <nav
-          aria-label="Platform overview"
-          className="hidden items-center gap-6 lg:flex"
-        >
-          {NAV_PREVIEW_ITEMS.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              onClick={() => focusLoginForm(`${item.label}: ${item.hint}`)}
-              className="whitespace-nowrap text-sm font-medium text-[#4F5580] transition hover:text-[#12141F] focus-visible:rounded-md focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#4F5580] dark:text-[#AFB4CE] dark:hover:text-white"
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
           <ThemeToggle />
@@ -207,12 +166,6 @@ export function AuthModal() {
                 <ShieldCheck className="h-4 w-4" />
               </div>
             </div>
-
-            {activeNavHint && (
-              <div className="mt-4 rounded-2xl border border-[#AFB4CE] bg-[#E4E6F0]/70 px-3.5 py-2.5 text-xs leading-relaxed text-[#12141F] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0]">
-                {activeNavHint}
-              </div>
-            )}
 
             <button
               type="button"
