@@ -35,7 +35,7 @@ function WorkspaceShell() {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#E4E6F0] text-xs font-medium text-[#4F5580] dark:bg-[#0D0F18] dark:text-[#AFB4CE]">
+      <div className="flex min-h-screen items-center justify-center bg-[#E6E8F0] text-xs font-medium text-[#5E6478] dark:bg-[#0D0F18] dark:text-[#B0B5C9]">
         Initializing PII GUARD workspace...
       </div>
     );
@@ -46,7 +46,7 @@ function WorkspaceShell() {
   }
 
   return (
-    <div className="relative flex min-h-screen bg-[#E4E6F0] text-[#12141F] transition-colors duration-200 dark:bg-[#0D0F18] dark:text-[#E4E6F0]">
+    <div className="relative flex min-h-screen bg-[#E6E8F0] text-[#131420] transition-colors duration-200 dark:bg-[#0D0F18] dark:text-[#E6E8F0]">
       <a href="#main-content" className="skip-link">
         Skip to main content
       </a>

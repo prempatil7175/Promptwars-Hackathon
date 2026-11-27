@@ -21,17 +21,17 @@ const VARIANT_STYLES: Record<
   { border: string; iconColor: string; Icon: React.ComponentType<{ className?: string }> }
 > = {
   info: {
-    border: 'border-[#AFB4CE] bg-white/95 dark:border-[#383E5C] dark:bg-[#1B1F30]/95',
-    iconColor: 'text-[#4F5580] dark:text-[#8B93C9]',
+    border: 'border-[#D8DCE8] bg-white/95 dark:border-[#2E314A] dark:bg-[#1B1D2E]/95',
+    iconColor: 'text-[#5A45F5] dark:text-[#8B93C9]',
     Icon: Info,
   },
   success: {
-    border: 'border-emerald-600/35 bg-white/95 dark:border-emerald-500/40 dark:bg-[#1B1F30]/95',
+    border: 'border-emerald-200 bg-white/95 dark:border-emerald-500/40 dark:bg-[#1B1D2E]/95',
     iconColor: 'text-emerald-700 dark:text-emerald-400',
     Icon: CheckCircle2,
   },
   warning: {
-    border: 'border-amber-600/40 bg-white/95 dark:border-amber-500/40 dark:bg-[#1B1F30]/95',
+    border: 'border-amber-200 bg-white/95 dark:border-amber-500/40 dark:bg-[#1B1D2E]/95',
     iconColor: 'text-amber-700 dark:text-amber-300',
     Icon: AlertTriangle,
   },
@@ -76,9 +76,9 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               >
                 <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${iconColor}`} />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold text-[#12141F] dark:text-white">{toast.title}</p>
+                  <p className="text-xs font-semibold text-[#131420] dark:text-white">{toast.title}</p>
                   {toast.description && (
-                    <p className="mt-0.5 text-xs leading-relaxed text-[#4F5580] dark:text-[#AFB4CE]">
+                    <p className="mt-0.5 text-xs leading-relaxed text-[#5E6478] dark:text-[#B0B5C9]">
                       {toast.description}
                     </p>
                   )}
@@ -86,7 +86,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 <button
                   type="button"
                   onClick={() => dismissToast(toast.id)}
-                  className="rounded-md p-0.5 text-[#4F5580] transition hover:bg-[#E4E6F0] hover:text-[#12141F] dark:text-[#AFB4CE] dark:hover:bg-[#232739] dark:hover:text-white"
+                  className="rounded-md p-0.5 text-[#5E6478] transition hover:bg-[#EEF0F7] hover:text-[#131420] dark:text-[#B0B5C9] dark:hover:bg-[#23263B] dark:hover:text-white"
                   aria-label="Dismiss notification"
                 >
                   <X className="h-3.5 w-3.5" />

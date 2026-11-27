@@ -16,21 +16,21 @@ export function DetectionSummary({ result }: DetectionSummaryProps) {
   return (
     <section
       aria-labelledby="detection-summary-heading"
-      className="rounded-2xl border border-[#AFB4CE] bg-white p-5 shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.55)]"
+      className="rounded-2xl border border-[#D8DCE8] bg-white p-5 shadow-[0_6px_20px_-8px_rgba(19,20,32,0.08)] dark:border-[#2E314A] dark:bg-[#1B1D2E] dark:shadow-[0_10px_28px_-10px_rgba(0,0,0,0.45)]"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <h3 id="detection-summary-heading" className="text-sm font-bold tracking-[-0.01em] text-[#12141F] dark:text-white">
+          <h3 id="detection-summary-heading" className="text-sm font-bold tracking-tight text-[#131420] dark:text-white">
             Real-Time Detection Telemetry
           </h3>
-          <p className="text-xs text-[#4F5580] dark:text-[#AFB4CE]">
-            Measured locally via <code className="rounded bg-[#E4E6F0] px-1 py-0.5 text-[#12141F] dark:bg-[#232739] dark:text-[#E4E6F0]">performance.now()</code> and deterministic validators
+          <p className="text-xs text-[#5E6478] dark:text-[#B0B5C9]">
+            Measured locally via <code className="rounded bg-[#EEF0F7] px-1 py-0.5 text-[#3B3E59] dark:bg-[#23263B] dark:text-[#E6E8F0]">performance.now()</code> and deterministic validators
           </p>
         </div>
 
         {stats && (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-[#E4E6F0] px-3 py-1 font-mono text-[11px] font-semibold text-[#12141F] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0]">
-            <Clock className="h-3 w-3 text-[#4F5580] dark:text-[#AFB4CE]" />
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D8DCE8] bg-[#EEF0F7] px-3 py-1 font-mono text-[11px] font-semibold text-[#3B3E59] dark:border-[#2E314A] dark:bg-[#23263B] dark:text-[#E6E8F0]">
+            <Clock className="h-3 w-3 text-[#5A45F5] dark:text-[#A5B4FC]" />
             {stats.processingDurationMs.toFixed(2)} ms
           </span>
         )}
@@ -38,52 +38,52 @@ export function DetectionSummary({ result }: DetectionSummaryProps) {
 
       {/* Top 4 metric tiles */}
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <div className="rounded-2xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-3.5 dark:border-[#383E5C] dark:bg-[#12141F]/70">
-          <div className="flex items-center justify-between text-xs font-medium text-[#4F5580] dark:text-[#AFB4CE]">
+        <div className="rounded-2xl border border-[#D8DCE8] bg-[#F4F5FA] p-3.5 dark:border-[#2E314A] dark:bg-[#131420]/70">
+          <div className="flex items-center justify-between text-xs font-medium text-[#5E6478] dark:text-[#B0B5C9]">
             <span>Detected Entities</span>
             <ShieldAlert className="h-3.5 w-3.5 text-rose-700 dark:text-rose-400" />
           </div>
-          <p className="mt-2 font-mono text-xl font-bold text-[#12141F] dark:text-white">
+          <p className="mt-2 font-mono text-xl font-bold text-[#131420] dark:text-white">
             {stats?.totalDetected ?? 0}
           </p>
-          <p className="mt-0.5 text-[11px] text-[#4F5580] dark:text-[#AFB4CE]">Validated PII spans</p>
+          <p className="mt-0.5 text-[11px] text-[#5E6478] dark:text-[#B0B5C9]">Validated PII spans</p>
         </div>
 
-        <div className="rounded-2xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-3.5 dark:border-[#383E5C] dark:bg-[#12141F]/70">
-          <div className="flex items-center justify-between text-xs font-medium text-[#4F5580] dark:text-[#AFB4CE]">
+        <div className="rounded-2xl border border-[#D8DCE8] bg-[#F4F5FA] p-3.5 dark:border-[#2E314A] dark:bg-[#131420]/70">
+          <div className="flex items-center justify-between text-xs font-medium text-[#5E6478] dark:text-[#B0B5C9]">
             <span>Sanitized Entities</span>
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
           </div>
-          <p className="mt-2 font-mono text-xl font-bold text-[#4F5580] dark:text-[#AFB4CE]">
+          <p className="mt-2 font-mono text-xl font-bold text-[#5A45F5] dark:text-emerald-300">
             {stats?.totalSanitized ?? 0}
           </p>
-          <p className="mt-0.5 text-[11px] text-[#4F5580] dark:text-[#AFB4CE]">
+          <p className="mt-0.5 text-[11px] text-[#5E6478] dark:text-[#B0B5C9]">
             Mode: {result?.mode ?? 'full'}
           </p>
         </div>
 
-        <div className="rounded-2xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-3.5 dark:border-[#383E5C] dark:bg-[#12141F]/70">
-          <div className="flex items-center justify-between text-xs font-medium text-[#4F5580] dark:text-[#AFB4CE]">
+        <div className="rounded-2xl border border-[#D8DCE8] bg-[#F4F5FA] p-3.5 dark:border-[#2E314A] dark:bg-[#131420]/70">
+          <div className="flex items-center justify-between text-xs font-medium text-[#5E6478] dark:text-[#B0B5C9]">
             <span>False Positives Rejected</span>
             <ShieldOff className="h-3.5 w-3.5 text-amber-700 dark:text-amber-400" />
           </div>
-          <p className="mt-2 font-mono text-xl font-bold text-[#12141F] dark:text-white">
+          <p className="mt-2 font-mono text-xl font-bold text-[#131420] dark:text-white">
             {stats?.rejectedFalsePositives ?? 0}
           </p>
-          <p className="mt-0.5 text-[11px] text-[#4F5580] dark:text-[#AFB4CE]">
+          <p className="mt-0.5 text-[11px] text-[#5E6478] dark:text-[#B0B5C9]">
             Invalid cards, IPs, dates, IDs
           </p>
         </div>
 
-        <div className="rounded-2xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-3.5 dark:border-[#383E5C] dark:bg-[#12141F]/70">
-          <div className="flex items-center justify-between text-xs font-medium text-[#4F5580] dark:text-[#AFB4CE]">
+        <div className="rounded-2xl border border-[#D8DCE8] bg-[#F4F5FA] p-3.5 dark:border-[#2E314A] dark:bg-[#131420]/70">
+          <div className="flex items-center justify-between text-xs font-medium text-[#5E6478] dark:text-[#B0B5C9]">
             <span>Payload Size</span>
-            <Activity className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
+            <Activity className="h-3.5 w-3.5 text-[#5A45F5] dark:text-[#A5B4FC]" />
           </div>
-          <p className="mt-2 font-mono text-xl font-bold text-[#12141F] dark:text-white">
+          <p className="mt-2 font-mono text-xl font-bold text-[#131420] dark:text-white">
             {formatBytes(stats?.byteCount ?? 0)}
           </p>
-          <p className="mt-0.5 text-[11px] text-[#4F5580] dark:text-[#AFB4CE]">
+          <p className="mt-0.5 text-[11px] text-[#5E6478] dark:text-[#B0B5C9]">
             {(stats?.characterCount ?? 0).toLocaleString()} chars
           </p>
         </div>
@@ -97,15 +97,15 @@ export function DetectionSummary({ result }: DetectionSummaryProps) {
           return (
             <div
               key={category}
-              className="flex items-center justify-between rounded-xl border border-[#AFB4CE] bg-[#E4E6F0]/30 px-3 py-2 text-xs dark:border-[#383E5C] dark:bg-[#12141F]/65"
+              className="flex items-center justify-between rounded-xl border border-[#D8DCE8] bg-[#F4F5FA] px-3 py-2 text-xs dark:border-[#2E314A] dark:bg-[#131420]/65"
             >
-              <span className="truncate font-medium text-[#12141F] dark:text-[#E4E6F0]">{CATEGORY_LABELS[category]}</span>
+              <span className="truncate font-medium text-[#131420] dark:text-[#E6E8F0]">{CATEGORY_LABELS[category]}</span>
               <div className="flex items-center gap-1.5 font-mono">
                 <span
                   className={`rounded-md px-1.5 py-0.5 text-[11px] font-semibold ${
                     count > 0
-                      ? 'border border-[#4F5580] bg-[#4F5580] text-white dark:border-[#5B6396] dark:bg-[#5B6396]'
-                      : 'border border-[#AFB4CE] bg-white text-[#4F5580] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#AFB4CE]'
+                      ? 'border border-[#5A45F5] bg-[#5A45F5] text-white'
+                      : 'border border-[#D8DCE8] bg-white text-[#5E6478] dark:border-[#2E314A] dark:bg-[#23263B] dark:text-[#B0B5C9]'
                   }`}
                 >
                   {count}
@@ -113,7 +113,7 @@ export function DetectionSummary({ result }: DetectionSummaryProps) {
                 {rejected > 0 && (
                   <span
                     title={`${rejected} invalid candidate(s) rejected`}
-                    className="rounded-md border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-800 dark:border-amber-500/35 dark:bg-amber-500/15 dark:text-amber-200"
+                    className="rounded-md border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-800 dark:border-amber-500/35 dark:bg-amber-500/15 dark:text-amber-200"
                   >
                     -{rejected} FP
                   </span>
@@ -126,7 +126,7 @@ export function DetectionSummary({ result }: DetectionSummaryProps) {
 
       {/* CSV metadata warnings if present */}
       {result?.csvMeta && (
-        <div className="mt-4 rounded-xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-3 text-xs text-[#12141F] dark:border-[#383E5C] dark:bg-[#12141F]/70 dark:text-[#E4E6F0]">
+        <div className="mt-4 rounded-xl border border-[#D8DCE8] bg-[#F4F5FA] p-3 text-xs text-[#131420] dark:border-[#2E314A] dark:bg-[#131420]/70 dark:text-[#E6E8F0]">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <span>
               CSV Structure Preserved: <strong>{result.csvMeta.rowCount}</strong> data rows ×{' '}

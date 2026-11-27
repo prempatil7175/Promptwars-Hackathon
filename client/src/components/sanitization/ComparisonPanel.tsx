@@ -317,17 +317,17 @@ export function ComparisonPanel({
     return (
       <section
         aria-label="Before and after comparison"
-        className="rounded-2xl border border-[#AFB4CE] bg-white p-8 text-center shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.55)]"
+        className="rounded-2xl border border-[#D8DCE8] bg-white p-8 text-center shadow-[0_6px_20px_-8px_rgba(19,20,32,0.08)] dark:border-[#2E314A] dark:bg-[#1B1D2E] dark:shadow-[0_10px_28px_-10px_rgba(0,0,0,0.45)]"
       >
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl border border-[#AFB4CE] bg-[#E4E6F0] dark:border-[#383E5C] dark:bg-[#232739]">
-          <Eye className="h-5 w-5 text-[#4F5580] dark:text-[#AFB4CE]" />
+        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-[#D8DCE8] bg-[#EEF0F7] dark:border-[#2E314A] dark:bg-[#23263B]">
+          <Eye className="h-5 w-5 text-[#5A45F5] dark:text-[#A5B4FC]" />
         </div>
-        <h3 className="mt-3 text-sm font-bold text-[#12141F] dark:text-white">
+        <h3 className="mt-3 text-sm font-bold text-[#131420] dark:text-white">
           Side-by-Side Comparison Ready
         </h3>
-        <p className="mx-auto mt-1 max-w-md text-xs leading-relaxed text-[#4F5580] dark:text-[#AFB4CE]">
-          Paste text, upload a <code className="rounded bg-[#E4E6F0] px-1 py-0.5 text-[#12141F] dark:bg-[#232739] dark:text-[#E4E6F0]">.txt</code> or{' '}
-          <code className="rounded bg-[#E4E6F0] px-1 py-0.5 text-[#12141F] dark:bg-[#232739] dark:text-[#E4E6F0]">.csv</code> file, or choose a synthetic sample above to inspect detected PII spans alongside sanitized output.
+        <p className="mx-auto mt-1 max-w-md text-xs leading-relaxed text-[#5E6478] dark:text-[#B0B5C9]">
+          Paste text, upload a <code className="rounded bg-[#EEF0F7] px-1 py-0.5 text-[#3B3E59] dark:bg-[#23263B] dark:text-[#E6E8F0]">.txt</code> or{' '}
+          <code className="rounded bg-[#EEF0F7] px-1 py-0.5 text-[#3B3E59] dark:bg-[#23263B] dark:text-[#E6E8F0]">.csv</code> file, or choose a synthetic sample above to inspect detected PII spans alongside sanitized output.
         </p>
       </section>
     );
@@ -336,30 +336,30 @@ export function ComparisonPanel({
   return (
     <section
       aria-labelledby="comparison-heading"
-      className="rounded-2xl border border-[#AFB4CE] bg-white p-5 shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.55)]"
+      className="rounded-2xl border border-[#D8DCE8] bg-white p-5 shadow-[0_6px_20px_-8px_rgba(19,20,32,0.08)] dark:border-[#2E314A] dark:bg-[#1B1D2E] dark:shadow-[0_10px_28px_-10px_rgba(0,0,0,0.45)]"
     >
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E4E6F0] pb-3.5 dark:border-[#383E5C]">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#E6E8F0] pb-3.5 dark:border-[#2E314A]">
         <div>
-          <h2 id="comparison-heading" className="text-sm font-bold tracking-[-0.01em] text-[#12141F] dark:text-white">
+          <h2 id="comparison-heading" className="text-sm font-bold tracking-tight text-[#131420] dark:text-white">
             Before / After Privacy Comparison
           </h2>
-          <p className="text-xs text-[#4F5580] dark:text-[#AFB4CE]">
+          <p className="text-xs text-[#5E6478] dark:text-[#B0B5C9]">
             Hover or focus any highlighted span to inspect category, confidence, and validation rule.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
-          <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-medium text-[#12141F] dark:text-[#E4E6F0]">
+          <label className="inline-flex cursor-pointer items-center gap-2 text-xs font-medium text-[#131420] dark:text-[#E6E8F0]">
             <input
               type="checkbox"
               checked={syncScroll}
               onChange={(e) => setSyncScroll(e.target.checked)}
-              className="h-3.5 w-3.5 rounded border-[#AFB4CE] bg-white accent-[#4F5580] dark:border-[#383E5C] dark:bg-[#12141F] dark:accent-[#5B6396]"
+              className="h-3.5 w-3.5 rounded border-[#D8DCE8] bg-white accent-[#5A45F5] dark:border-[#2E314A] dark:bg-[#131420]"
             />
             Sync scroll
           </label>
           {isProcessing && (
-            <span className="rounded-full border border-[#AFB4CE] bg-[#E4E6F0] px-2.5 py-1 text-[11px] font-medium text-[#12141F] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0]">
+            <span className="rounded-full border border-[#D8DCE8] bg-[#EEF0F7] px-2.5 py-1 text-[11px] font-medium text-[#3B3E59] dark:border-[#2E314A] dark:bg-[#23263B] dark:text-[#E6E8F0]">
               Updating...
             </span>
           )}
@@ -369,34 +369,34 @@ export function ComparisonPanel({
       {/* Accessible live inspector bar */}
       <div
         aria-live="polite"
-        className="mt-3 flex min-h-[36px] flex-wrap items-center justify-between gap-2 rounded-xl border border-[#AFB4CE] bg-[#E4E6F0]/45 px-3.5 py-2 text-xs dark:border-[#383E5C] dark:bg-[#12141F]/70"
+        className="mt-3 flex min-h-[36px] flex-wrap items-center justify-between gap-2 rounded-xl border border-[#D8DCE8] bg-[#F4F5FA] px-3.5 py-2 text-xs dark:border-[#2E314A] dark:bg-[#131420]/70"
       >
         {inspectedEntity ? (
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="rounded-full border border-[#4F5580] bg-[#4F5580] px-2.5 py-0.5 text-[10px] font-semibold text-white dark:border-[#5B6396] dark:bg-[#5B6396]">
+            <span className="rounded-full border border-[#5A45F5] bg-[#5A45F5] px-2.5 py-0.5 text-[10px] font-semibold text-white">
               {CATEGORY_LABELS[inspectedEntity.category]}
             </span>
-            <span className="text-[#12141F] dark:text-[#E4E6F0]">{inspectedEntity.explanation}</span>
-            <span className="font-mono text-[11px] font-semibold text-[#4F5580] dark:text-[#AFB4CE]">
+            <span className="text-[#131420] dark:text-[#E6E8F0]">{inspectedEntity.explanation}</span>
+            <span className="font-mono text-[11px] font-semibold text-[#5E6478] dark:text-[#B0B5C9]">
               Validation: {inspectedEntity.validationResult} ({Math.round(inspectedEntity.confidence * 100)}%)
             </span>
           </div>
         ) : (
-          <span className="text-[#4F5580] dark:text-[#AFB4CE]">
+          <span className="text-[#5E6478] dark:text-[#B0B5C9]">
             Tip: Tab or hover over any highlighted entity badge to inspect its validation metadata.
           </span>
         )}
       </div>
 
       {isTruncatedPreview && (
-        <div className="mt-3 rounded-xl border border-amber-400 bg-amber-50 px-3.5 py-2 text-xs text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/50 dark:text-amber-200">
+        <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2 text-xs text-amber-900 dark:border-amber-500/40 dark:bg-amber-950/50 dark:text-amber-200">
           Showing first {PREVIEW_CHAR_LIMIT.toLocaleString()} characters in visual diff preview to preserve UI responsiveness. Copy and file exports include the full document.
         </div>
       )}
 
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         {/* Left: Original */}
-        <div className="flex flex-col rounded-xl border border-[#AFB4CE] bg-white dark:border-[#383E5C] dark:bg-[#12141F]">
+        <div className="flex flex-col rounded-xl border border-[#D8DCE8] bg-white dark:border-[#2E314A] dark:bg-[#131420]">
           <div className="flex items-center justify-between rounded-t-[11px] border-b border-rose-200 bg-rose-50 px-3.5 py-2.5 dark:border-rose-800/50 dark:bg-rose-950/45">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-700 dark:text-rose-300">
               <ShieldAlert className="h-3.5 w-3.5 text-rose-700 dark:text-rose-400" />
@@ -412,7 +412,7 @@ export function ComparisonPanel({
             onScroll={() => handleScroll('left')}
             tabIndex={0}
             aria-label="Original document with detected PII highlighted"
-            className="h-80 overflow-auto rounded-b-[11px] bg-white p-3.5 font-mono text-xs leading-relaxed whitespace-pre-wrap break-words text-[#12141F] focus:outline-2 focus:outline-[#4F5580] dark:bg-[#12141F] dark:text-[#E4E6F0] dark:focus:outline-[#7B81A8]"
+            className="h-80 overflow-auto rounded-b-[11px] bg-white p-3.5 font-mono text-xs leading-relaxed whitespace-pre-wrap break-words text-[#131420] focus:outline-2 focus:outline-[#5A45F5] dark:bg-[#131420] dark:text-[#E6E8F0]"
           >
             {originalSegments.map((seg) => (
               <HighlightedToken
@@ -426,7 +426,7 @@ export function ComparisonPanel({
         </div>
 
         {/* Right: Sanitized */}
-        <div className="flex flex-col rounded-xl border border-[#AFB4CE] bg-white dark:border-[#383E5C] dark:bg-[#12141F]">
+        <div className="flex flex-col rounded-xl border border-[#D8DCE8] bg-white dark:border-[#2E314A] dark:bg-[#131420]">
           <div className="flex items-center justify-between rounded-t-[11px] border-b border-emerald-200 bg-emerald-50 px-3.5 py-2.5 dark:border-emerald-800/50 dark:bg-emerald-950/45">
             <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
@@ -443,7 +443,7 @@ export function ComparisonPanel({
             onScroll={() => handleScroll('right')}
             tabIndex={0}
             aria-label="Sanitized document output with replacements highlighted"
-            className="h-80 overflow-auto rounded-b-[11px] bg-white p-3.5 font-mono text-xs leading-relaxed whitespace-pre-wrap break-words text-[#12141F] focus:outline-2 focus:outline-[#4F5580] dark:bg-[#12141F] dark:text-[#E4E6F0] dark:focus:outline-[#7B81A8]"
+            className="h-80 overflow-auto rounded-b-[11px] bg-white p-3.5 font-mono text-xs leading-relaxed whitespace-pre-wrap break-words text-[#131420] focus:outline-2 focus:outline-[#5A45F5] dark:bg-[#131420] dark:text-[#E6E8F0]"
           >
             {sanitizedSegments.map((seg) => (
               <HighlightedToken

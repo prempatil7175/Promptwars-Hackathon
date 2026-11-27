@@ -1,7 +1,7 @@
 export function Skeleton({ className = '' }: { className?: string }) {
   return (
     <div
-      className={`animate-pulse rounded-lg bg-[#E4E6F0] dark:bg-[#2E334B] ${className}`}
+      className={`animate-pulse rounded-lg bg-[#EEF0F7] dark:bg-[#23263B] ${className}`}
       aria-hidden="true"
     />
   );
@@ -9,7 +9,7 @@ export function Skeleton({ className = '' }: { className?: string }) {
 
 export function CardSkeleton() {
   return (
-    <div className="rounded-2xl border border-[#AFB4CE] bg-white p-5 shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_10px_28px_-10px_rgba(0,0,0,0.45)]">
+    <div className="rounded-2xl border border-[#D8DCE8] bg-white p-5 shadow-[0_6px_20px_-8px_rgba(19,20,32,0.08)] dark:border-[#2E314A] dark:bg-[#1B1D2E] dark:shadow-[0_10px_28px_-10px_rgba(0,0,0,0.45)]">
       <div className="flex items-center justify-between">
         <Skeleton className="h-3.5 w-28" />
         <Skeleton className="h-5 w-14 rounded-full" />

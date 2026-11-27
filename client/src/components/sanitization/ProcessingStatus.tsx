@@ -20,15 +20,15 @@ export function ProcessingStatus({
   return (
     <div
       aria-live="polite"
-      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#AFB4CE] bg-white px-4 py-2.5 text-xs shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.55)]"
+      className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#D8DCE8] bg-white px-4 py-2.5 text-xs shadow-[0_6px_20px_-8px_rgba(19,20,32,0.08)] dark:border-[#2E314A] dark:bg-[#1B1D2E] dark:shadow-[0_10px_28px_-10px_rgba(0,0,0,0.45)]"
     >
       <div className="flex items-center gap-2.5">
         {isProcessing ? (
-          <Loader2 className="h-4 w-4 animate-spin text-[#4F5580] dark:text-[#AFB4CE]" />
+          <Loader2 className="h-4 w-4 animate-spin text-[#5A45F5] dark:text-[#A5B4FC]" />
         ) : (
           <ShieldCheck className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
         )}
-        <span className="font-medium text-[#12141F] dark:text-[#E4E6F0]">
+        <span className="font-medium text-[#131420] dark:text-[#E6E8F0]">
           {isProcessing
             ? `Sanitizing locally: ${progressStage} (${progressPercent}%)`
             : characterCount > 0
@@ -39,12 +39,12 @@ export function ProcessingStatus({
 
       <div className="flex flex-wrap items-center gap-2">
         {workerWarning && (
-          <span className="rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-[11px] font-medium text-amber-800 dark:border-amber-500/35 dark:bg-amber-500/15 dark:text-amber-200">
+          <span className="rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-[11px] font-medium text-amber-800 dark:border-amber-500/35 dark:bg-amber-500/15 dark:text-amber-200">
             {workerWarning}
           </span>
         )}
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-[#E4E6F0] px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#12141F] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0]">
-          <Cpu className="h-3 w-3 text-[#4F5580] dark:text-[#AFB4CE]" />
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#D8DCE8] bg-[#EEF0F7] px-2.5 py-0.5 font-mono text-[11px] font-medium text-[#3B3E59] dark:border-[#2E314A] dark:bg-[#23263B] dark:text-[#E6E8F0]">
+          <Cpu className="h-3 w-3 text-[#5A45F5] dark:text-[#A5B4FC]" />
           {executionPath === 'web-worker'
             ? 'Web Worker (>50k chars)'
             : executionPath === 'worker-fallback'
@@ -54,9 +54,9 @@ export function ProcessingStatus({
       </div>
 
       {isProcessing && (
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#E4E6F0] dark:bg-[#12141F]">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-[#EEF0F7] dark:bg-[#131420]">
           <div
-            className="h-full rounded-full bg-gradient-to-r from-[#4F5580] to-[#12141F] transition-all duration-150 dark:from-[#5B6396] dark:to-[#8B93C9]"
+            className="h-full rounded-full bg-gradient-to-r from-[#5A45F5] to-[#4A35E0] transition-all duration-150"
             style={{ width: `${Math.max(5, progressPercent)}%` }}
           />
         </div>
