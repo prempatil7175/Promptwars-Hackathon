@@ -71,29 +71,29 @@ export function DocumentInput({
   return (
     <section
       aria-labelledby="doc-input-heading"
-      className="rounded-2xl border border-white/10 bg-[#111116] p-5 shadow-xl"
+      className="rounded-2xl border border-[#AFB4CE] bg-white p-5 shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.55)]"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 id="doc-input-heading" className="text-sm font-semibold text-zinc-100">
+          <h2 id="doc-input-heading" className="text-sm font-bold tracking-[-0.01em] text-[#12141F] dark:text-white">
             Source Document Input
           </h2>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-[#4F5580] dark:text-[#AFB4CE]">
             Processed 100% locally in browser memory — never transmitted to any server.
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           {fileName && (
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-2.5 py-1 text-[11px] font-medium text-indigo-200">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-[#E4E6F0] px-3 py-1 text-[11px] font-medium text-[#12141F] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0]">
               {fileType === 'csv' ? (
-                <FileSpreadsheet className="h-3.5 w-3.5 text-indigo-400" />
+                <FileSpreadsheet className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
               ) : (
-                <FileText className="h-3.5 w-3.5 text-indigo-400" />
+                <FileText className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
               )}
               <span className="max-w-[160px] truncate">{fileName}</span>
               {fileSizeBytes !== null && (
-                <span className="font-mono text-[10px] text-indigo-300/80">
+                <span className="font-mono text-[10px] text-[#4F5580] dark:text-[#AFB4CE]">
                   ({formatBytes(fileSizeBytes)})
                 </span>
               )}
@@ -104,9 +104,9 @@ export function DocumentInput({
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={readingFile}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-200 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 disabled:opacity-50"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-white px-3.5 py-1.5 text-xs font-medium text-[#12141F] transition hover:border-[#4F5580] hover:bg-[#E4E6F0]/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4F5580] disabled:opacity-50 dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0] dark:hover:border-[#5B6396] dark:hover:bg-[#383E5C]"
           >
-            <Upload className="h-3.5 w-3.5 text-indigo-400" />
+            <Upload className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
             {readingFile ? 'Reading...' : 'Browse .txt / .csv'}
           </button>
 
@@ -114,7 +114,7 @@ export function DocumentInput({
             type="button"
             onClick={onClear}
             disabled={!value && !fileName}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-zinc-300 transition hover:border-rose-500/30 hover:bg-rose-500/10 hover:text-rose-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-[#E4E6F0]/60 px-3.5 py-1.5 text-xs font-medium text-[#12141F] transition hover:border-rose-400 hover:bg-rose-100 hover:text-rose-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700 disabled:cursor-not-allowed disabled:opacity-40 dark:border-[#383E5C] dark:bg-[#12141F] dark:text-[#E4E6F0] dark:hover:border-rose-500/60 dark:hover:bg-rose-950/60 dark:hover:text-rose-200"
           >
             <Trash2 className="h-3.5 w-3.5" />
             Clear &amp; Reset Memory
@@ -136,8 +136,8 @@ export function DocumentInput({
         }}
         className={`mt-4 rounded-xl border transition ${
           isDragging
-            ? 'border-indigo-400 bg-indigo-500/10'
-            : 'border-white/10 bg-[#09090b]'
+            ? 'border-[#4F5580] bg-[#E4E6F0]/70 ring-2 ring-[#4F5580]/20 dark:border-[#5B6396] dark:bg-[#232739] dark:ring-[#5B6396]/30'
+            : 'border-[#AFB4CE] bg-[#E4E6F0]/35 dark:border-[#383E5C] dark:bg-[#12141F]/80'
         }`}
       >
         <input
@@ -159,16 +159,16 @@ export function DocumentInput({
           onChange={(e) => onChange(e.target.value)}
           placeholder="Paste sensitive text, logs, support tickets, or drag-and-drop a .txt / .csv file (max 10 MB)..."
           spellCheck={false}
-          className="w-full resize-y rounded-t-xl bg-transparent px-4 py-3 font-mono text-xs leading-relaxed text-zinc-100 placeholder:font-sans placeholder:text-zinc-500 focus:outline-none"
+          className="w-full resize-y rounded-t-xl bg-transparent px-4 py-3 font-mono text-xs leading-relaxed text-[#12141F] placeholder:font-sans placeholder:text-[#575D8A] focus:outline-none dark:text-[#E4E6F0] dark:placeholder:text-[#9CA3C7]"
         />
 
-        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 px-4 py-2 text-[11px] text-zinc-400">
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-b-xl border-t border-[#AFB4CE] bg-white px-4 py-2 text-[11px] text-[#4F5580] dark:border-[#383E5C] dark:bg-[#12141F] dark:text-[#AFB4CE]">
           <div className="flex flex-wrap items-center gap-4 font-mono">
             <span>{characterCount.toLocaleString()} chars</span>
             <span>{lineCount.toLocaleString()} lines</span>
             <span>{formatBytes(byteCount)} UTF-8</span>
           </div>
-          <span className="text-zinc-500">
+          <span className="text-[#4F5580] dark:text-[#AFB4CE]">
             Drop .txt or .csv • Max {formatBytes(MAX_UPLOAD_BYTES)}
           </span>
         </div>
@@ -177,9 +177,9 @@ export function DocumentInput({
       {fileError && (
         <div
           role="alert"
-          className="mt-3 flex items-start gap-2 rounded-xl border border-rose-500/35 bg-rose-500/10 px-3.5 py-2.5 text-xs text-rose-200"
+          className="mt-3 flex items-start gap-2 rounded-xl border border-rose-300 bg-rose-50 px-3.5 py-2.5 text-xs text-rose-900 dark:border-rose-500/40 dark:bg-rose-950/50 dark:text-rose-200"
         >
-          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" />
+          <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-rose-700 dark:text-rose-400" />
           <span>{fileError}</span>
         </div>
       )}

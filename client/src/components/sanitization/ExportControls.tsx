@@ -121,7 +121,6 @@ export function ExportControls({
     setAuditBlockReason(null);
     setAuditResult(null);
 
-    // Mandatory client-side pre-flight re-verification before ANY external AI call
     const check = verifyZeroResidualPii(result.sanitizedText, config);
     if (!check.safe) {
       const categoryNames = check.residualCategories
@@ -166,14 +165,14 @@ export function ExportControls({
   return (
     <section
       aria-labelledby="export-controls-heading"
-      className="space-y-4 rounded-2xl border border-white/10 bg-[#111116] p-5"
+      className="space-y-4 rounded-2xl border border-[#AFB4CE] bg-white p-5 shadow-[0_8px_24px_-10px_rgba(18,20,31,0.10)] dark:border-[#383E5C] dark:bg-[#1B1F30] dark:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.55)]"
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h3 id="export-controls-heading" className="text-sm font-semibold text-zinc-100">
+          <h3 id="export-controls-heading" className="text-sm font-bold tracking-[-0.01em] text-[#12141F] dark:text-white">
             Safe Export &amp; Optional Privacy-Gated AI Review
           </h3>
-          <p className="text-xs text-zinc-400">
+          <p className="text-xs text-[#4F5580] dark:text-[#AFB4CE]">
             Downloads execute locally. JSON audit exports aggregate metadata only.
           </p>
         </div>
@@ -183,12 +182,12 @@ export function ExportControls({
             type="button"
             onClick={() => void handleCopy()}
             disabled={!hasOutput}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-white px-3.5 py-1.5 text-xs font-medium text-[#12141F] transition hover:border-[#4F5580] hover:bg-[#E4E6F0]/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4F5580] disabled:cursor-not-allowed disabled:opacity-40 dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0] dark:hover:border-[#5B6396] dark:hover:bg-[#383E5C]"
           >
             {copied ? (
-              <Check className="h-3.5 w-3.5 text-emerald-400" />
+              <Check className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" />
             ) : (
-              <Copy className="h-3.5 w-3.5 text-zinc-300" />
+              <Copy className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
             )}
             {copied ? 'Copied' : 'Copy Sanitized'}
           </button>
@@ -197,9 +196,9 @@ export function ExportControls({
             type="button"
             onClick={() => handleDownloadSanitized('txt')}
             disabled={!hasOutput}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-white px-3.5 py-1.5 text-xs font-medium text-[#12141F] transition hover:border-[#4F5580] hover:bg-[#E4E6F0]/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4F5580] disabled:cursor-not-allowed disabled:opacity-40 dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0] dark:hover:border-[#5B6396] dark:hover:bg-[#383E5C]"
           >
-            <FileText className="h-3.5 w-3.5 text-indigo-400" />
+            <FileText className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
             Download .txt
           </button>
 
@@ -207,9 +206,9 @@ export function ExportControls({
             type="button"
             onClick={() => handleDownloadSanitized('csv')}
             disabled={!hasOutput}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-100 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-white px-3.5 py-1.5 text-xs font-medium text-[#12141F] transition hover:border-[#4F5580] hover:bg-[#E4E6F0]/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4F5580] disabled:cursor-not-allowed disabled:opacity-40 dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0] dark:hover:border-[#5B6396] dark:hover:bg-[#383E5C]"
           >
-            <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-400" />
+            <FileSpreadsheet className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
             Download .csv
           </button>
 
@@ -217,9 +216,9 @@ export function ExportControls({
             type="button"
             onClick={handleDownloadAudit}
             disabled={!hasOutput}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-indigo-500/35 bg-indigo-500/15 px-3 py-1.5 text-xs font-medium text-indigo-200 transition hover:bg-indigo-500/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#AFB4CE] bg-[#E4E6F0] px-3.5 py-1.5 text-xs font-semibold text-[#12141F] transition hover:border-[#4F5580] hover:bg-[#AFB4CE]/40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4F5580] disabled:cursor-not-allowed disabled:opacity-40 dark:border-[#383E5C] dark:bg-[#12141F] dark:text-[#E4E6F0] dark:hover:border-[#5B6396] dark:hover:bg-[#232739]"
           >
-            <FileJson className="h-3.5 w-3.5" />
+            <FileJson className="h-3.5 w-3.5 text-[#4F5580] dark:text-[#AFB4CE]" />
             <Download className="h-3 w-3" />
             Audit JSON
           </button>
@@ -228,12 +227,12 @@ export function ExportControls({
             type="button"
             onClick={() => void handleRunComplianceAudit()}
             disabled={!hasOutput || auditLoading}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-violet-500/35 bg-violet-500/15 px-3 py-1.5 text-xs font-medium text-violet-200 transition hover:bg-violet-500/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-400 disabled:cursor-not-allowed disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[#4F5580] px-4 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-[#383E5C] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4F5580] disabled:cursor-not-allowed disabled:opacity-40 dark:bg-[#5B6396] dark:hover:bg-[#4F5580]"
           >
             {auditLoading ? (
               <Loader2 className="h-3.5 w-3.5 animate-spin" />
             ) : (
-              <Sparkles className="h-3.5 w-3.5" />
+              <Sparkles className="h-3.5 w-3.5 text-[#E4E6F0]" />
             )}
             AI Advisory Audit
           </button>
@@ -243,18 +242,18 @@ export function ExportControls({
       {auditBlockReason && (
         <div
           role="alert"
-          className="flex items-start gap-2.5 rounded-xl border border-rose-500/40 bg-rose-500/10 p-3.5 text-xs text-rose-200"
+          className="flex items-start gap-2.5 rounded-xl border border-rose-300 bg-rose-50 p-3.5 text-xs text-rose-900 dark:border-rose-500/40 dark:bg-rose-950/50 dark:text-rose-200"
         >
-          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-rose-400" />
+          <ShieldAlert className="mt-0.5 h-4 w-4 shrink-0 text-rose-700 dark:text-rose-400" />
           <div>
-            <p className="font-semibold text-rose-100">External AI Request Blocked</p>
+            <p className="font-semibold text-rose-950 dark:text-rose-100">External AI Request Blocked</p>
             <p className="mt-0.5 leading-relaxed">{auditBlockReason}</p>
           </div>
         </div>
       )}
 
       {auditLoading && (
-        <div className="space-y-2.5 rounded-xl border border-white/10 bg-[#09090b] p-4">
+        <div className="space-y-2.5 rounded-xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-4 dark:border-[#383E5C] dark:bg-[#12141F]/70">
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="h-3 w-full" />
           <Skeleton className="h-3 w-5/6" />
@@ -262,31 +261,31 @@ export function ExportControls({
       )}
 
       {auditResult && !auditLoading && (
-        <div className="space-y-3 rounded-xl border border-white/10 bg-[#09090b] p-4 text-xs">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-white/10 pb-2.5">
-            <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-300">
-              <ShieldCheck className="h-4 w-4" />
+        <div className="space-y-3 rounded-xl border border-[#AFB4CE] bg-[#E4E6F0]/35 p-4 text-xs dark:border-[#383E5C] dark:bg-[#12141F]/70">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#AFB4CE] pb-2.5 dark:border-[#383E5C]">
+            <span className="inline-flex items-center gap-1.5 font-semibold text-emerald-800 dark:text-emerald-300">
+              <ShieldCheck className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
               Sanitized Advisory Review ({auditResult.source === 'live' ? auditResult.model : 'Local Fallback'})
             </span>
-            <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 font-mono text-[11px] capitalize text-zinc-300">
+            <span className="rounded-full border border-[#AFB4CE] bg-white px-2.5 py-0.5 font-mono text-[11px] capitalize text-[#12141F] dark:border-[#383E5C] dark:bg-[#232739] dark:text-[#E4E6F0]">
               Residual risk: {auditResult.residualRiskLevel} • {auditResult.latencyMs}ms
             </span>
           </div>
 
-          <p className="leading-relaxed text-zinc-200">{auditResult.advisorySummary}</p>
+          <p className="leading-relaxed text-[#12141F] dark:text-[#E4E6F0]">{auditResult.advisorySummary}</p>
 
           <div className="grid gap-3 md:grid-cols-2">
             <div>
-              <p className="font-semibold text-zinc-300">Observations</p>
-              <ul className="mt-1.5 list-disc space-y-1 pl-4 text-zinc-400">
+              <p className="font-semibold text-[#12141F] dark:text-white">Observations</p>
+              <ul className="mt-1.5 list-disc space-y-1 pl-4 text-[#4F5580] dark:text-[#AFB4CE]">
                 {auditResult.observations.map((obs, i) => (
                   <li key={i}>{obs}</li>
                 ))}
               </ul>
             </div>
             <div>
-              <p className="font-semibold text-zinc-300">Recommended Controls</p>
-              <ul className="mt-1.5 list-disc space-y-1 pl-4 text-zinc-400">
+              <p className="font-semibold text-[#12141F] dark:text-white">Recommended Controls</p>
+              <ul className="mt-1.5 list-disc space-y-1 pl-4 text-[#4F5580] dark:text-[#AFB4CE]">
                 {auditResult.recommendedControls.map((ctrl, i) => (
                   <li key={i}>{ctrl}</li>
                 ))}
@@ -294,7 +293,7 @@ export function ExportControls({
             </div>
           </div>
 
-          <p className="border-t border-white/10 pt-2 text-[11px] text-zinc-500">
+          <p className="border-t border-[#AFB4CE] pt-2 text-[11px] text-[#4F5580] dark:border-[#383E5C] dark:text-[#AFB4CE]">
             {auditResult.disclaimer}
           </p>
         </div>

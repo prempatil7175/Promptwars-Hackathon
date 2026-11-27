@@ -21,18 +21,18 @@ const VARIANT_STYLES: Record<
   { border: string; iconColor: string; Icon: React.ComponentType<{ className?: string }> }
 > = {
   info: {
-    border: 'border-indigo-500/30 bg-zinc-900/95',
-    iconColor: 'text-indigo-400',
+    border: 'border-[#AFB4CE] bg-white/95 dark:border-[#383E5C] dark:bg-[#1B1F30]/95',
+    iconColor: 'text-[#4F5580] dark:text-[#8B93C9]',
     Icon: Info,
   },
   success: {
-    border: 'border-emerald-500/30 bg-zinc-900/95',
-    iconColor: 'text-emerald-400',
+    border: 'border-emerald-600/35 bg-white/95 dark:border-emerald-500/40 dark:bg-[#1B1F30]/95',
+    iconColor: 'text-emerald-700 dark:text-emerald-400',
     Icon: CheckCircle2,
   },
   warning: {
-    border: 'border-amber-500/30 bg-zinc-900/95',
-    iconColor: 'text-amber-400',
+    border: 'border-amber-600/40 bg-white/95 dark:border-amber-500/40 dark:bg-[#1B1F30]/95',
+    iconColor: 'text-amber-700 dark:text-amber-300',
     Icon: AlertTriangle,
   },
 };
@@ -60,7 +60,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
       <div
         aria-live="polite"
-        className="pointer-events-none fixed right-4 bottom-4 z-50 flex w-full max-w-sm flex-col gap-2"
+        className="pointer-events-none fixed right-4 bottom-4 left-4 z-50 flex flex-col gap-2 sm:left-auto sm:w-full sm:max-w-sm"
       >
         <AnimatePresence>
           {toasts.map((toast) => {
@@ -72,13 +72,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 8, scale: 0.96 }}
                 transition={{ duration: 0.18 }}
-                className={`pointer-events-auto flex items-start gap-3 rounded-xl border px-3.5 py-3 shadow-2xl backdrop-blur-md ${border}`}
+                className={`pointer-events-auto flex items-start gap-3 rounded-2xl border px-4 py-3 shadow-[0_8px_24px_-10px_rgba(18,20,31,0.2)] backdrop-blur-md dark:shadow-[0_12px_28px_-8px_rgba(0,0,0,0.5)] ${border}`}
               >
                 <Icon className={`mt-0.5 h-4 w-4 shrink-0 ${iconColor}`} />
                 <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold text-zinc-100">{toast.title}</p>
+                  <p className="text-xs font-semibold text-[#12141F] dark:text-white">{toast.title}</p>
                   {toast.description && (
-                    <p className="mt-0.5 text-xs leading-relaxed text-zinc-400">
+                    <p className="mt-0.5 text-xs leading-relaxed text-[#4F5580] dark:text-[#AFB4CE]">
                       {toast.description}
                     </p>
                   )}
@@ -86,7 +86,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 <button
                   type="button"
                   onClick={() => dismissToast(toast.id)}
-                  className="rounded-md p-0.5 text-zinc-500 transition hover:bg-white/10 hover:text-zinc-200"
+                  className="rounded-md p-0.5 text-[#4F5580] transition hover:bg-[#E4E6F0] hover:text-[#12141F] dark:text-[#AFB4CE] dark:hover:bg-[#232739] dark:hover:text-white"
                   aria-label="Dismiss notification"
                 >
                   <X className="h-3.5 w-3.5" />
