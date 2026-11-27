@@ -1,5 +1,13 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle2, Database, RefreshCw, Server, ShieldCheck, Sparkles } from 'lucide-react';
+import {
+  CheckCircle2,
+  Database,
+  Lock,
+  RefreshCw,
+  Server,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react';
 import { CardSkeleton } from '../components/ui/Skeleton';
 import { useAuth } from '../context/AuthContext';
 import { useDemoMode } from '../context/DemoModeContext';
@@ -50,7 +58,7 @@ export function SettingsPage() {
                 <kbd className="rounded bg-white/10 px-1.5 py-0.5 font-mono text-[10px] text-zinc-200">
                   Ctrl+Shift+D
                 </kbd>
-                . Automatically recovers from &gt;8s timeouts or rate limits.
+                . Core local PII sanitization works offline even without backend connectivity.
               </p>
             </div>
           </div>
@@ -72,7 +80,7 @@ export function SettingsPage() {
           <div className="rounded-xl border border-white/10 bg-[#09090b] p-3.5">
             <p className="text-[11px] text-zinc-400">Current Mode</p>
             <p className="mt-1 text-sm font-semibold text-zinc-100">
-              {isDemoMode ? 'Cached Demo Mode' : 'Live API + Fallback Shield'}
+              {isDemoMode ? 'Cached Demo Mode' : 'Live Optional AI + Local Shield'}
             </p>
           </div>
           <div className="rounded-xl border border-white/10 bg-[#09090b] p-3.5">
@@ -98,7 +106,7 @@ export function SettingsPage() {
               Service &amp; Environment Readiness
             </h2>
             <p className="text-xs text-zinc-400">
-              All integrations degrade cleanly when .env keys are left blank
+              Optional AI &amp; Auth integrations degrade cleanly when .env keys are blank
             </p>
           </div>
           <button
@@ -128,10 +136,10 @@ export function SettingsPage() {
                 <CheckCircle2 className="h-4 w-4 text-emerald-400" />
               </div>
               <p className="mt-3 text-sm font-semibold text-zinc-100">
-                {health?.status === 'ok' ? 'Reachable (:4000)' : 'Fallback Mode'}
+                {health?.status === 'ok' ? 'Reachable (:4000)' : 'Offline / Local Only'}
               </p>
               <p className="mt-1 text-xs text-zinc-500">
-                GET /api/health &amp; POST /api/ai/generate
+                Rate-limited, CORS-restricted optional AI endpoints
               </p>
             </div>
 
@@ -152,10 +160,10 @@ export function SettingsPage() {
                 </span>
               </div>
               <p className="mt-3 text-sm font-semibold text-zinc-100">
-                gemini-4-hydrogen
+                gemini-2.5-flash
               </p>
               <p className="mt-1 text-xs text-zinc-500">
-                Set GEMINI_API_KEY in server/.env for live calls
+                Server-side only • Synthetic samples &amp; sanitized audit only
               </p>
             </div>
 
@@ -188,6 +196,34 @@ export function SettingsPage() {
             </div>
           </div>
         )}
+      </section>
+
+      {/* Honest Privacy Architecture & Threat Model */}
+      <section className="rounded-2xl border border-white/10 bg-[#111116] p-5">
+        <div className="flex items-center gap-2">
+          <Lock className="h-4 w-4 text-emerald-400" />
+          <h2 className="text-sm font-semibold text-zinc-100">
+            Privacy Architecture &amp; Threat Model
+          </h2>
+        </div>
+        <div className="mt-3 grid gap-3 text-xs leading-relaxed text-zinc-400 md:grid-cols-2">
+          <div className="rounded-xl border border-white/10 bg-[#09090b] p-4">
+            <p className="font-semibold text-zinc-200">Guaranteed in Normal Application Flows</p>
+            <ul className="mt-2 list-disc space-y-1 pl-4">
+              <li>Original text, uploaded `.txt`/`.csv` files, and pseudonym mappings stay strictly in transient browser memory.</li>
+              <li>No raw documents are written to `localStorage`, `sessionStorage`, `IndexedDB`, or browser logs.</li>
+              <li>Optional AI Advisory Audit re-runs local PII detection and blocks dispatch if any PII remains.</li>
+            </ul>
+          </div>
+          <div className="rounded-xl border border-white/10 bg-[#09090b] p-4">
+            <p className="font-semibold text-zinc-200">Threat Model Boundaries</p>
+            <ul className="mt-2 list-disc space-y-1 pl-4">
+              <li>Client-side sanitization protects standard application workflows and prevents accidental server transmission.</li>
+              <li>Browser-side controls cannot prevent a user with DevTools from modifying their own local JavaScript runtime.</li>
+              <li>Pseudonymization provides deterministic session consistency, not cryptographic anonymity.</li>
+            </ul>
+          </div>
+        </div>
       </section>
     </div>
   );

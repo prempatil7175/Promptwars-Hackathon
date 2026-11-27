@@ -1,11 +1,13 @@
 import {
   BarChart3,
+  CheckSquare,
   ChevronLeft,
   ChevronRight,
+  FileLock2,
   LayoutDashboard,
+  Lock,
   Settings,
-  Sparkles,
-  Zap,
+  ShieldCheck,
 } from 'lucide-react';
 import type { NavTab } from '../../types';
 
@@ -22,8 +24,9 @@ const NAV_ITEMS: {
   Icon: React.ComponentType<{ className?: string }>;
 }[] = [
   { id: 'dashboard', label: 'Dashboard', Icon: LayoutDashboard },
-  { id: 'playground', label: 'AI Playground', Icon: Sparkles },
-  { id: 'analytics', label: 'Analytics', Icon: BarChart3 },
+  { id: 'workspace', label: 'Sanitization Workspace', Icon: FileLock2 },
+  { id: 'analytics', label: 'Detection Analytics', Icon: BarChart3 },
+  { id: 'verification', label: 'Verification Suite', Icon: CheckSquare },
   { id: 'settings', label: 'Settings', Icon: Settings },
 ];
 
@@ -36,22 +39,22 @@ export function Sidebar({
   return (
     <aside
       className={`relative flex shrink-0 flex-col border-r border-white/10 bg-[#0c0c10] transition-all duration-200 ${
-        collapsed ? 'w-[72px]' : 'w-60'
+        collapsed ? 'w-[72px]' : 'w-64'
       }`}
     >
       {/* Brand header */}
       <div className="flex h-16 items-center justify-between border-b border-white/10 px-4">
         <div className="flex items-center gap-2.5 overflow-hidden">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/20">
-            <Zap className="h-4 w-4 text-white" />
+            <ShieldCheck className="h-4 w-4 text-white" />
           </div>
           {!collapsed && (
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-tight text-zinc-100">
-                PulseForge
+                PII GUARD
               </p>
-              <p className="truncate text-[10px] font-medium uppercase tracking-wider text-indigo-400">
-                Hackathon Kit
+              <p className="truncate text-[10px] font-medium uppercase tracking-wider text-emerald-400">
+                Privacy Platform
               </p>
             </div>
           )}
@@ -81,6 +84,7 @@ export function Sidebar({
               type="button"
               onClick={() => onSelectTab(id)}
               title={collapsed ? label : undefined}
+              aria-current={isActive ? 'page' : undefined}
               className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
                 isActive
                   ? 'bg-indigo-500/15 text-indigo-300 ring-1 ring-inset ring-indigo-500/30'
@@ -98,12 +102,18 @@ export function Sidebar({
         })}
       </nav>
 
-      {/* Bottom template hint */}
       {!collapsed && (
-        <div className="m-3 rounded-xl border border-white/10 bg-white/[0.02] p-3">
-          <p className="text-xs font-medium text-zinc-200">24h Ship Mode</p>
+        <div className="m-3 rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-3">
+          <p className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-300">
+            <Lock className="h-3.5 w-3.5" />
+            Local-Only Engine
+          </p>
           <p className="mt-1 text-[11px] leading-relaxed text-zinc-400">
-            Press <kbd className="rounded bg-white/10 px-1 py-0.5 font-mono text-[10px]">Ctrl+Shift+D</kbd> anytime to lock Demo Mode before judging.
+            Documents never leave browser memory. Press{' '}
+            <kbd className="rounded bg-white/10 px-1 py-0.5 font-mono text-[10px] text-zinc-200">
+              Ctrl+Shift+D
+            </kbd>{' '}
+            to toggle Demo Mode.
           </p>
         </div>
       )}

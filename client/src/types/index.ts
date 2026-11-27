@@ -1,4 +1,11 @@
-export type NavTab = 'dashboard' | 'playground' | 'analytics' | 'settings';
+import type { PiiCategory, SanitizationMode } from '../engine/types';
+
+export type NavTab =
+  | 'dashboard'
+  | 'workspace'
+  | 'analytics'
+  | 'verification'
+  | 'settings';
 
 export interface DemoUser {
   id: string;
@@ -28,42 +35,54 @@ export interface AiGenerateResponse {
   latencyMs: number;
 }
 
-export interface AiRunHistoryItem {
-  id: string;
-  prompt: string;
-  timestamp: string;
-  result: AiGenerateResponse;
-}
+export type SyntheticTemplateType =
+  | 'support-ticket'
+  | 'clinical-note'
+  | 'hr-resume'
+  | 'mixed-csv';
 
-export interface KpiMetric {
-  id: string;
-  label: string;
-  value: string;
-  delta: string;
-  trend: 'up' | 'down';
-  detail: string;
-}
-
-export interface ThroughputPoint {
-  label: string;
-  liveRequests: number;
-  cachedFallbacks: number;
+export interface SyntheticSampleResponse {
+  title: string;
+  templateType: SyntheticTemplateType;
+  fileType: 'txt' | 'csv';
+  content: string;
+  isSynthetic: true;
+  model: string;
+  source: 'live' | 'demo-fallback';
+  fallbackReason?: string;
   latencyMs: number;
 }
 
-export interface CategoryMetric {
-  category: string;
-  runs: number;
-  accuracy: number;
+export interface ComplianceAuditResponse {
+  advisorySummary: string;
+  residualRiskLevel: 'low' | 'moderate' | 'review-recommended';
+  observations: string[];
+  recommendedControls: string[];
+  disclaimer: string;
+  model: string;
+  source: 'live' | 'demo-fallback';
+  fallbackReason?: string;
+  latencyMs: number;
 }
 
-export interface ActivityItem {
+export interface SessionActivityItem {
   id: string;
-  title: string;
-  pipeline: string;
-  status: 'live' | 'demo-fallback';
-  timeAgo: string;
-  latency: string;
+  documentLabel: string;
+  fileType: 'text' | 'txt' | 'csv';
+  mode: SanitizationMode;
+  detectedCount: number;
+  sanitizedCount: number;
+  rejectedCount: number;
+  durationMs: number;
+  timestamp: string;
+  isDemoFixture?: boolean;
+}
+
+export interface LatencySeriesPoint {
+  label: string;
+  detected: number;
+  rejected: number;
+  durationMs: number;
 }
 
 export interface ServerHealth {
@@ -83,3 +102,5 @@ export interface ToastMessage {
   description?: string;
   variant: ToastVariant;
 }
+
+export type CategoryTotals = Record<PiiCategory, number>;

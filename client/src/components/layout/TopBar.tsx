@@ -1,33 +1,37 @@
-import { LogOut, Sparkles } from 'lucide-react';
+import { FileLock2, Lock, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import type { NavTab } from '../../types';
 import { StatusPill } from '../ui/StatusPill';
 
 interface TopBarProps {
   activeTab: NavTab;
-  onQuickPlayground: () => void;
+  onQuickWorkspace: () => void;
 }
 
 const TAB_TITLES: Record<NavTab, { title: string; subtitle: string }> = {
   dashboard: {
-    title: 'Command Dashboard',
-    subtitle: 'Live telemetry, Recharts insights, and instant Gemini workflows',
+    title: 'Privacy Command Dashboard',
+    subtitle: 'Session sanitization telemetry, category visibility, and local privacy boundary',
   },
-  playground: {
-    title: 'AI Playground',
-    subtitle: 'Structured JSON generation via Gemini 4 Hydrogen with 8s fallback shield',
+  workspace: {
+    title: 'Sanitization Workspace',
+    subtitle: 'Client-only PII detection, validation, masking, comparison, and safe export',
   },
   analytics: {
-    title: 'System Analytics',
-    subtitle: 'Throughput, latency, and schema pass-rate breakdown',
+    title: 'Detection Analytics',
+    subtitle: 'Validated PII counts, false-positive rejections, and engine duration metrics',
+  },
+  verification: {
+    title: 'Verification Suite',
+    subtitle: 'Live in-browser execution of shared validator, pipeline, CSV, and privacy tests',
   },
   settings: {
-    title: 'Environment & Demo Controls',
-    subtitle: 'Verify backend services, Supabase readiness, and Demo Mode state',
+    title: 'Environment & Privacy Controls',
+    subtitle: 'Service readiness, Demo Mode toggle, and architectural threat model',
   },
 };
 
-export function TopBar({ activeTab, onQuickPlayground }: TopBarProps) {
+export function TopBar({ activeTab, onQuickWorkspace }: TopBarProps) {
   const { user, signOut } = useAuth();
   const meta = TAB_TITLES[activeTab];
 
@@ -43,14 +47,19 @@ export function TopBar({ activeTab, onQuickPlayground }: TopBarProps) {
       </div>
 
       <div className="flex items-center gap-3">
-        {activeTab !== 'playground' && (
+        <span className="hidden items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-1 text-[11px] font-medium text-emerald-300 xl:inline-flex">
+          <Lock className="h-3 w-3" />
+          Zero Server Egress
+        </span>
+
+        {activeTab !== 'workspace' && (
           <button
             type="button"
-            onClick={onQuickPlayground}
+            onClick={onQuickWorkspace}
             className="hidden items-center gap-1.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-3 py-1.5 text-xs font-medium text-indigo-300 transition hover:bg-indigo-500/20 md:inline-flex"
           >
-            <Sparkles className="h-3.5 w-3.5" />
-            New AI Run
+            <FileLock2 className="h-3.5 w-3.5" />
+            Sanitize Document
           </button>
         )}
 

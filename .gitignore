@@ -7,6 +7,8 @@ server/node_modules/
 dist/
 client/dist/
 server/dist/
+coverage/
+client/coverage/
 *.tsbuildinfo
 
 # Environment variables

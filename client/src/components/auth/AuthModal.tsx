@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, KeyRound, ShieldCheck, Sparkles, UserCheck, Zap } from 'lucide-react';
+import { ArrowRight, KeyRound, Lock, ShieldCheck, UserCheck } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
 export function AuthModal() {
@@ -19,7 +19,6 @@ export function AuthModal() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#09090b] px-4 py-12">
-      {/* Ambient dark radial glow */}
       <div
         className="pointer-events-none absolute -top-40 left-1/2 h-96 w-[44rem] -translate-x-1/2 rounded-full bg-indigo-600/20 blur-[140px]"
         aria-hidden="true"
@@ -28,19 +27,19 @@ export function AuthModal() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.28 }}
+        transition={{ duration: 0.25 }}
         className="relative w-full max-w-md rounded-2xl border border-white/10 bg-[#111116]/95 p-7 shadow-2xl backdrop-blur-xl"
       >
         <div className="flex items-center gap-3">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 shadow-lg shadow-indigo-500/25">
-            <Zap className="h-5 w-5 text-white" />
+            <ShieldCheck className="h-5 w-5 text-white" />
           </div>
           <div>
             <h1 className="text-lg font-semibold tracking-tight text-zinc-100">
-              PulseForge AI Starter
+              PII GUARD
             </h1>
             <p className="text-xs text-zinc-400">
-              24-Hour Hackathon Template • Unbreakable Demo Ready
+              Intelligent Data Privacy Platform • Detect. Protect. Share with Confidence.
             </p>
           </div>
         </div>
@@ -48,10 +47,10 @@ export function AuthModal() {
         {/* Instant Demo User CTA */}
         <div className="mt-6 rounded-xl border border-indigo-500/30 bg-indigo-500/10 p-4">
           <div className="flex items-start gap-2.5">
-            <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400" />
+            <Lock className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
             <div className="text-xs leading-relaxed text-zinc-300">
-              <span className="font-semibold text-zinc-100">Judge / Rapid Preview:</span>{' '}
-              Skip credential setup and launch straight into the pre-seeded workspace.
+              <span className="font-semibold text-zinc-100">Privacy-First Local Engine:</span>{' '}
+              Launch immediately — documents stay 100% in your browser memory.
             </div>
           </div>
 
@@ -82,7 +81,7 @@ export function AuthModal() {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="builder@team.dev"
+              placeholder="engineer@company.com"
               className="mt-1.5 w-full rounded-xl border border-white/10 bg-[#09090b] px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:border-indigo-500/60 focus:outline-none"
             />
           </div>
@@ -114,7 +113,7 @@ export function AuthModal() {
         <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-4 text-[11px] text-zinc-500">
           <span className="inline-flex items-center gap-1.5">
             <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
-            8s Auto-Fallback Shield
+            Offline &amp; Demo Ready
           </span>
           <span>
             Supabase: {supabaseReady ? 'Configured' : 'Demo Ready'}

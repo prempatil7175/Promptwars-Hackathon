@@ -24,7 +24,7 @@ export function StatusPill() {
           <Radio className="relative inline-flex h-2 w-2 text-emerald-400" />
         </span>
       )}
-      <span>{isDemoMode ? 'Demo Mode' : 'Live AI'}</span>
+      <span>{isDemoMode ? 'Demo Mode' : 'Live Mode'}</span>
       <kbd className="hidden rounded border border-white/10 bg-black/40 px-1.5 py-0.5 font-mono text-[10px] text-zinc-400 sm:inline-block">
         Ctrl+Shift+D
       </kbd>

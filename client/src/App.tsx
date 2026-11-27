@@ -1,47 +1,28 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import { AuthModal } from './components/auth/AuthModal';
 import { Sidebar } from './components/layout/Sidebar';
 import { TopBar } from './components/layout/TopBar';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { DemoModeProvider } from './context/DemoModeContext';
+import { PrivacySessionProvider } from './context/PrivacySessionContext';
 import { ToastProvider } from './context/ToastContext';
-import { buildClientMockAiResponse, PROMPT_PRESETS } from './data/mockData';
 import { AIPlaygroundPage } from './pages/AIPlaygroundPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { DashboardPage } from './pages/DashboardPage';
 import { SettingsPage } from './pages/SettingsPage';
-import type { AiGenerateResponse, AiRunHistoryItem, NavTab } from './types';
+import { VerificationSuitePage } from './pages/VerificationSuitePage';
+import type { NavTab } from './types';
 
 function WorkspaceShell() {
   const { isAuthenticated, isLoading } = useAuth();
   const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [history, setHistory] = useState<AiRunHistoryItem[]>(() => [
-    {
-      id: 'seed-run-1',
-      prompt: PROMPT_PRESETS[0].prompt,
-      timestamp: 'Just now',
-      result: buildClientMockAiResponse(PROMPT_PRESETS[0].prompt, 'Pre-seeded initial output'),
-    },
-  ]);
-
-  const handleRunComplete = (prompt: string, result: AiGenerateResponse) => {
-    setHistory((prev) => [
-      {
-        id: `run-${Date.now()}`,
-        prompt,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        result,
-      },
-      ...prev.slice(0, 9),
-    ]);
-  };
 
   if (isLoading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#09090b] text-xs text-zinc-400">
-        Initializing workspace...
+        Initializing PII GUARD workspace...
       </div>
     );
   }
@@ -52,6 +33,10 @@ function WorkspaceShell() {
 
   return (
     <div className="flex min-h-screen bg-[#09090b] text-zinc-100">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
       <Sidebar
         activeTab={activeTab}
         onSelectTab={setActiveTab}
@@ -62,26 +47,30 @@ function WorkspaceShell() {
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar
           activeTab={activeTab}
-          onQuickPlayground={() => setActiveTab('playground')}
+          onQuickWorkspace={() => setActiveTab('workspace')}
         />
 
-        <main className="flex-1 p-6">
+        <main id="main-content" tabIndex={-1} className="flex-1 p-6 focus:outline-none">
           <div className="mx-auto max-w-7xl">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
-                transition={{ duration: 0.16 }}
+                transition={{ duration: 0.14 }}
               >
                 {activeTab === 'dashboard' && (
-                  <DashboardPage onRunComplete={handleRunComplete} />
+                  <DashboardPage
+                    onOpenWorkspace={() => setActiveTab('workspace')}
+                    onOpenVerification={() => setActiveTab('verification')}
+                  />
                 )}
-                {activeTab === 'playground' && (
-                  <AIPlaygroundPage history={history} onRunComplete={handleRunComplete} />
+                {activeTab === 'workspace' && <AIPlaygroundPage />}
+                {activeTab === 'analytics' && (
+                  <AnalyticsPage onOpenWorkspace={() => setActiveTab('workspace')} />
                 )}
-                {activeTab === 'analytics' && <AnalyticsPage />}
+                {activeTab === 'verification' && <VerificationSuitePage />}
                 {activeTab === 'settings' && <SettingsPage />}
               </motion.div>
             </AnimatePresence>
@@ -94,12 +83,16 @@ function WorkspaceShell() {
 
 export default function App() {
   return (
-    <ToastProvider>
-      <DemoModeProvider>
-        <AuthProvider>
-          <WorkspaceShell />
-        </AuthProvider>
-      </DemoModeProvider>
-    </ToastProvider>
+    <MotionConfig reducedMotion="user">
+      <ToastProvider>
+        <DemoModeProvider>
+          <AuthProvider>
+            <PrivacySessionProvider>
+              <WorkspaceShell />
+            </PrivacySessionProvider>
+          </AuthProvider>
+        </DemoModeProvider>
+      </ToastProvider>
+    </MotionConfig>
   );
 }

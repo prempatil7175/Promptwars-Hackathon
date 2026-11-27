@@ -1,184 +1,274 @@
-import { Activity, ArrowUpRight, Cpu, ShieldCheck, Zap } from 'lucide-react';
 import {
-  Area,
-  AreaChart,
+  ArrowRight,
+  CheckCircle2,
+  FileSearch,
+  Lock,
+  ShieldAlert,
+  ShieldCheck,
+  ShieldOff,
+  Sliders,
+} from 'lucide-react';
+import {
+  Bar,
+  BarChart,
   CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts';
-import { AIPlaygroundCard } from '../components/ai/AIPlaygroundCard';
-import {
-  MOCK_ACTIVITY_FEED,
-  MOCK_KPIS,
-  MOCK_THROUGHPUT_SERIES,
-} from '../data/mockData';
-import type { AiGenerateResponse } from '../types';
+import { usePrivacySession } from '../context/PrivacySessionContext';
+import { DEMO_FIXTURE_ACTIVITY } from '../data/mockData';
+import { ALL_PII_CATEGORIES, CATEGORY_LABELS, type SanitizationMode } from '../engine/types';
 
 interface DashboardPageProps {
-  onRunComplete: (prompt: string, result: AiGenerateResponse) => void;
+  onOpenWorkspace: () => void;
+  onOpenVerification: () => void;
 }
 
-const KPI_ICONS = [Zap, Cpu, ShieldCheck, Activity];
+const MODE_LABELS: Record<SanitizationMode, string> = {
+  full: 'Full Mask',
+  partial: 'Partial Mask',
+  pseudonymize: 'Consistent Pseudonym',
+};
 
-export function DashboardPage({ onRunComplete }: DashboardPageProps) {
+export function DashboardPage({
+  onOpenWorkspace,
+  onOpenVerification,
+}: DashboardPageProps) {
+  const {
+    mode,
+    documentsProcessed,
+    totalDetected,
+    totalSanitized,
+    totalRejected,
+    categoryTotals,
+    recentActivity,
+  } = usePrivacySession();
+
+  const hasSessionActivity = documentsProcessed > 0;
+
+  const chartData = ALL_PII_CATEGORIES.map((category) => ({
+    category: CATEGORY_LABELS[category],
+    count: hasSessionActivity ? categoryTotals[category] : 0,
+  }));
+
+  const displayActivity = hasSessionActivity ? recentActivity : DEMO_FIXTURE_ACTIVITY;
+
   return (
     <div className="space-y-6">
-      {/* KPI Grid */}
-      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {MOCK_KPIS.map((kpi, idx) => {
-          const Icon = KPI_ICONS[idx % KPI_ICONS.length];
-          return (
-            <div
-              key={kpi.id}
-              className="rounded-2xl border border-white/10 bg-[#111116] p-5 transition hover:border-white/20"
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-zinc-400">{kpi.label}</span>
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg border border-white/10 bg-white/[0.03]">
-                  <Icon className="h-3.5 w-3.5 text-indigo-400" />
-                </div>
-              </div>
-              <div className="mt-3 flex items-baseline justify-between gap-2">
-                <p className="text-2xl font-bold tracking-tight text-zinc-100">
-                  {kpi.value}
-                </p>
-                <span className="inline-flex items-center gap-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
-                  <ArrowUpRight className="h-3 w-3" />
-                  {kpi.delta}
-                </span>
-              </div>
-              <p className="mt-1.5 text-xs text-zinc-500">{kpi.detail}</p>
+      {/* Privacy Hero Banner */}
+      <section className="rounded-2xl border border-white/10 bg-[#111116] p-6 shadow-xl">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="max-w-2xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-medium text-emerald-300">
+              <Lock className="h-3.5 w-3.5" />
+              Client-Only Privacy Boundary Active • Zero Raw Document Egress
             </div>
-          );
-        })}
+            <h2 className="mt-3 text-xl font-semibold tracking-tight text-zinc-100">
+              PII GUARD — Detect. Protect. Share with Confidence.
+            </h2>
+            <p className="mt-1.5 text-xs leading-relaxed text-zinc-400">
+              Inspect, validate, redact, or pseudonymize emails, Indian &amp; international phones, IPv4/IPv6 addresses, PAN, Verhoeff-validated Aadhaar, and Luhn-validated payment cards entirely inside your browser.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            <button
+              type="button"
+              onClick={onOpenVerification}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-white/15 bg-white/[0.04] px-4 py-2.5 text-xs font-medium text-zinc-200 transition hover:bg-white/10"
+            >
+              <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+              Run Verification Suite
+            </button>
+            <button
+              type="button"
+              onClick={onOpenWorkspace}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-600 px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-indigo-500/20 transition hover:brightness-110"
+            >
+              <FileSearch className="h-4 w-4" />
+              Start Sanitization
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+        </div>
       </section>
 
-      {/* Recharts Trend + Activity Feed */}
+      {/* Session KPI Grid */}
+      <section aria-label="Session privacy metrics" className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="rounded-2xl border border-white/10 bg-[#111116] p-5">
+          <div className="flex items-center justify-between text-xs text-zinc-400">
+            <span>Session Documents Processed</span>
+            <FileSearch className="h-4 w-4 text-indigo-400" />
+          </div>
+          <p className="mt-3 font-mono text-2xl font-bold text-zinc-100">
+            {documentsProcessed}
+          </p>
+          <p className="mt-1 text-xs text-zinc-500">
+            {hasSessionActivity
+              ? 'Processed in browser memory this session'
+              : 'No session documents run yet'}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#111116] p-5">
+          <div className="flex items-center justify-between text-xs text-zinc-400">
+            <span>Total PII Entities Detected</span>
+            <ShieldAlert className="h-4 w-4 text-rose-400" />
+          </div>
+          <p className="mt-3 font-mono text-2xl font-bold text-zinc-100">
+            {totalDetected}
+          </p>
+          <p className="mt-1 text-xs text-zinc-500">
+            {totalRejected} false-positive candidates rejected
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#111116] p-5">
+          <div className="flex items-center justify-between text-xs text-zinc-400">
+            <span>Total Entities Sanitized</span>
+            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          </div>
+          <p className="mt-3 font-mono text-2xl font-bold text-emerald-400">
+            {totalSanitized}
+          </p>
+          <p className="mt-1 text-xs text-zinc-500">
+            Active policy: {MODE_LABELS[mode]}
+          </p>
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#111116] p-5">
+          <div className="flex items-center justify-between text-xs text-zinc-400">
+            <span>Privacy Boundary Status</span>
+            <Sliders className="h-4 w-4 text-emerald-400" />
+          </div>
+          <p className="mt-3 text-lg font-semibold text-emerald-300">
+            Local-Only Enforced
+          </p>
+          <p className="mt-1 text-xs text-zinc-500">
+            No raw text in storage, logs, or API calls
+          </p>
+        </div>
+      </section>
+
+      {/* Category Distribution + Recent Processing Activity */}
       <section className="grid gap-6 lg:grid-cols-3">
         <div className="rounded-2xl border border-white/10 bg-[#111116] p-5 lg:col-span-2">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
             <div>
-              <h2 className="text-sm font-semibold text-zinc-100">
-                Inference Throughput &amp; Fallback Shield
-              </h2>
+              <h3 className="text-sm font-semibold text-zinc-100">
+                PII Categories Detected (Current Session)
+              </h3>
               <p className="text-xs text-zinc-400">
-                Live requests vs automatic cached fallback recoveries (24h)
+                Live counts from local detection pipeline — zero fabricated telemetry
               </p>
             </div>
-            <div className="flex items-center gap-4 text-xs text-zinc-400">
-              <span className="inline-flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-indigo-400" />
-                Live Requests
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <span className="h-2 w-2 rounded-full bg-amber-400" />
-                Fallbacks
-              </span>
-            </div>
-          </div>
-
-          <div className="h-64 w-full">
-            <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
-                data={MOCK_THROUGHPUT_SERIES}
-                margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
-              >
-                <defs>
-                  <linearGradient id="liveGradient" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.38} />
-                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0.0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-                <XAxis
-                  dataKey="label"
-                  stroke="#71717a"
-                  fontSize={11}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  stroke="#71717a"
-                  fontSize={11}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#111116',
-                    border: '1px solid rgba(255,255,255,0.12)',
-                    borderRadius: '12px',
-                    color: '#f4f4f5',
-                    fontSize: '12px',
-                  }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="liveRequests"
-                  name="Live Requests"
-                  stroke="#818cf8"
-                  strokeWidth={2}
-                  fillOpacity={1}
-                  fill="url(#liveGradient)"
-                />
-                <Area
-                  type="monotone"
-                  dataKey="cachedFallbacks"
-                  name="Cached Fallbacks"
-                  stroke="#fbbf24"
-                  strokeWidth={2}
-                  fillOpacity={0.15}
-                  fill="#fbbf24"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Recent AI Activity Feed */}
-        <div className="rounded-2xl border border-white/10 bg-[#111116] p-5">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-zinc-100">Recent AI Runs</h2>
-            <span className="rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] text-zinc-400">
-              Seeded Stream
+            <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-0.5 text-[11px] text-zinc-300">
+              {hasSessionActivity ? 'Live Session Counts' : 'Awaiting Session Run'}
             </span>
           </div>
 
-          <div className="space-y-3">
-            {MOCK_ACTIVITY_FEED.map((item) => (
+          {!hasSessionActivity ? (
+            <div className="flex h-64 flex-col items-center justify-center rounded-xl border border-dashed border-white/10 bg-[#09090b] p-6 text-center">
+              <ShieldOff className="h-7 w-7 text-zinc-500" />
+              <p className="mt-2.5 text-xs font-medium text-zinc-200">
+                No documents processed yet in this session
+              </p>
+              <p className="mt-1 max-w-sm text-[11px] text-zinc-400">
+                Open the Sanitization Workspace and load a synthetic sample or paste text to populate real category counts.
+              </p>
+              <button
+                type="button"
+                onClick={onOpenWorkspace}
+                className="mt-3 rounded-lg border border-indigo-500/35 bg-indigo-500/15 px-3 py-1.5 text-xs font-medium text-indigo-200 transition hover:bg-indigo-500/25"
+              >
+                Open Sanitization Workspace
+              </button>
+            </div>
+          ) : (
+            <div className="h-64 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart
+                  data={chartData}
+                  margin={{ top: 8, right: 8, left: -16, bottom: 0 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
+                  <XAxis
+                    dataKey="category"
+                    stroke="#71717a"
+                    fontSize={10}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    stroke="#71717a"
+                    fontSize={11}
+                    allowDecimals={false}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: '#111116',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      borderRadius: '12px',
+                      color: '#f4f4f5',
+                      fontSize: '12px',
+                    }}
+                  />
+                  <Bar
+                    dataKey="count"
+                    name="Detected Entities"
+                    fill="#6366f1"
+                    radius={[6, 6, 0, 0]}
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          )}
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-[#111116] p-5">
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-sm font-semibold text-zinc-100">Recent Processing Activity</h3>
+            <span className="rounded-full border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[11px] text-zinc-400">
+              {hasSessionActivity ? 'Session Metadata' : 'Demo Fixtures'}
+            </span>
+          </div>
+
+          <div className="space-y-2.5">
+            {displayActivity.map((item) => (
               <div
                 key={item.id}
-                className="rounded-xl border border-white/5 bg-[#09090b]/80 p-3 transition hover:border-white/15"
+                className="rounded-xl border border-white/5 bg-[#09090b]/85 p-3"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <p className="text-xs font-medium text-zinc-200">{item.title}</p>
+                  <p className="truncate text-xs font-medium text-zinc-200">
+                    {item.documentLabel}
+                  </p>
                   <span
                     className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                      item.status === 'live'
-                        ? 'bg-emerald-500/15 text-emerald-300'
-                        : 'bg-amber-500/15 text-amber-300'
+                      item.isDemoFixture
+                        ? 'bg-amber-500/15 text-amber-300'
+                        : 'bg-emerald-500/15 text-emerald-300'
                     }`}
                   >
-                    {item.status === 'live' ? 'Live' : 'Fallback'}
+                    {item.isDemoFixture ? 'Fixture' : item.mode}
                   </span>
                 </div>
-                <div className="mt-2 flex items-center justify-between font-mono text-[11px] text-zinc-500">
-                  <span>{item.pipeline}</span>
+                <div className="mt-1.5 flex items-center justify-between font-mono text-[11px] text-zinc-500">
                   <span>
-                    {item.latency} • {item.timeAgo}
+                    {item.detectedCount} PII • {item.rejectedCount} FP rejected
+                  </span>
+                  <span>
+                    {item.durationMs}ms • {item.timestamp}
                   </span>
                 </div>
               </div>
             ))}
           </div>
         </div>
-      </section>
-
-      {/* Interactive AI Playground embedded on Dashboard */}
-      <section>
-        <AIPlaygroundCard compact onRunComplete={onRunComplete} />
       </section>
     </div>
   );
