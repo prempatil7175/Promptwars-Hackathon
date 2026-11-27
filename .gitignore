@@ -7,6 +7,7 @@ server/node_modules/
 dist/
 client/dist/
 server/dist/
+.vercel/
 coverage/
 client/coverage/
 *.tsbuildinfo
@@ -26,3 +27,6 @@ npm-debug.log*
 Thumbs.db
 .vscode/*
 !.vscode/extensions.json
+
+.vercel
+.env*
